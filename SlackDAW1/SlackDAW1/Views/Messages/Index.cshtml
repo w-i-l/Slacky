@@ -1,10 +1,15 @@
-﻿@model IEnumerable<SlackDAW1.Models.Message>
+﻿@model IOrderedQueryable<SlackDAW1.Models.Message>
 
 <h2>Messages</h2>
+
+<p>
+	@Html.ActionLink("Create New", "New")
+</p>
 
 <table class="table">
     <tr>
         <th>Message</th>
+        <th>Channel</th>
         <th>Timestamp</th>
         <th></th>
     </tr>
@@ -12,6 +17,7 @@
 @foreach (var message in Model) {
     <tr>
         <td>@message.Body</td>
+        <td>@message.Channel.ChannelName</td>
         <td>@message.Timestamp</td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = message.MessageID }) |

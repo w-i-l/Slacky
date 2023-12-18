@@ -6,8 +6,28 @@
 {
     <div class="form-group">
         @Html.LabelFor(model => model.Body)
-        @Html.TextAreaFor(model => model.Body)
-        @Html.ValidationMessageFor(model => model.Body)
+        @Html.TextAreaFor(model => model.Body, new { @class = "form-control", rows = 5, placeholder = "Enter your message..." })
+        @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+
+        <br />
+
+        @Html.LabelFor(model => model.Channel)
+        @if (ViewBag.Channels != null)
+        {
+            @Html.DropDownListFor(
+                model => model.ChannelID,
+                new SelectList(ViewBag.Channels, "Value", "Text"),
+                new { @class = "form-control" }
+            )
+            @Html.ValidationMessageFor(model => model.Channel, "", new { @class = "text-danger" })
+        }
+        else
+        {
+            <p>Error: Couldn't fetch any channels.</p>
+            <button><a href="/Messages/New">Reload</a></button>
+        }
+
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     </div>
 
     <input type="submit" value="Create" class="btn btn-primary" />

@@ -19,31 +19,39 @@ namespace SlackDAW1.Controllers
 
         public IActionResult Index()
         {
-            var messages = db.Messages;
+            var messages = db.Messages.OrderByDescending(m => m.Timestamp).Include("Channel");
             return View(messages);
         }
 
        
         public IActionResult New()
         {
-            return View();
+            Message message = new Message();
+
+            ViewBag.Channels = ChannelsController.GetAllChannelsToDisplayForForm(db);
+
+            return View(message);
         }
 
       
         [HttpPost]
         public IActionResult New(Message message)
         {
-            message.Timestamp = DateTime.Now;
-            message.SenderID = 1;
-            message.ChannelID = 1;
+
             if (ModelState.IsValid)
             {   
+                message.Timestamp = DateTime.Now;
+                // TODO: Change from hardcoded to logged in user
+                message.SenderID = 1;
                 db.Messages.Add(message);
                 db.SaveChanges();
                 TempData["message"] = "Message was added";
                 return RedirectToAction("Index");
-            }
-            return View(message);
+            } else
+            {
+				ViewBag.Channels = ChannelsController.GetAllChannelsToDisplayForForm(db);
+                return View(message);
+			}
         }
 
     

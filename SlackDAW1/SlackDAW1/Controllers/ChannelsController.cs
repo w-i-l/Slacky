@@ -113,5 +113,24 @@ namespace SlackDAW1.Controllers
 
             return View();
         }
-    }
+
+		[NonAction]
+		public static IEnumerable<SelectListItem> GetAllChannelsToDisplayForForm(ApplicationDbContext db)
+		{
+			var selectList = new List<SelectListItem>();
+
+            var channels = from chan in db.Channels
+                           select chan;
+
+            foreach (var channel in channels)
+			{
+				selectList.Add(new SelectListItem
+				{
+					Value = channel.ChannelID.ToString(),
+					Text = channel.ChannelName.ToString()
+				});
+			}
+			return selectList;
+		}
+	}
 }
