@@ -1,0 +1,20 @@
+﻿@model SlackDAW1.Models.Channel
+
+@{
+	ViewBag.Title = "Show";
+}
+
+<div class="container w-50 container-fluid align-self-center">
+
+	<h2>Show channel</h2>
+
+	<br />
+
+	<div class="channel-info">
+
+		<h2>@Model.ChannelName</h2>
+		<p>@Model.ChannelDescription</p>
+		<p>@Model.Category.CategoryName</p>
+
+	</div>
+</div>
