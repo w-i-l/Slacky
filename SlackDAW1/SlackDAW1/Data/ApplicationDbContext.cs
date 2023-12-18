@@ -13,6 +13,7 @@ namespace SlackDAW1.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Channel> Channels { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

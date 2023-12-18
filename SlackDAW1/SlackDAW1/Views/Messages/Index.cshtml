@@ -1,5 +1,23 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model IEnumerable<SlackDAW1.Models.Message>
+
+<h2>Messages</h2>
+
+<table class="table">
+    <tr>
+        <th>Message</th>
+        <th>Timestamp</th>
+        <th></th>
+    </tr>
+
+@foreach (var message in Model) {
+    <tr>
+        <td>@message.Body</td>
+        <td>@message.Timestamp</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = message.MessageID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = message.MessageID }) |
+            @Html.ActionLink("Details", "Show", new { id = message.MessageID })
+        </td>
+    </tr>
 }
+</table>

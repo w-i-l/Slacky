@@ -8,6 +8,11 @@
       "type": "mssql",
       "connectionId": "SlackyDaw1ConnectionString",
       "dynamicId": null
+    },
+    "mssql3": {
+      "type": "mssql",
+      "connectionId": "Slack",
+      "dynamicId": null
     }
   }
 }

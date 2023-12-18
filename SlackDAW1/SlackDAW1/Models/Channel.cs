@@ -9,8 +9,8 @@ namespace SlackDAW1.Models
         public int ChannelID { get; set; }
 
         [Required(ErrorMessage = "Channel name is required")]
-        [StringLength(50, ErrorMessage = "Channel name cannot be longer than 50 characters")]
-        [MinLength(10, ErrorMessage = "Channel name must be at least 10 characters")]
+        [StringLength(20, ErrorMessage = "Channel name cannot be longer than 20 characters")]
+        [MinLength(1, ErrorMessage = "Channel name must be at least 1 character long")]
         public string ChannelName { get; set; }
 
         [Required(ErrorMessage = "Channel description is required")]

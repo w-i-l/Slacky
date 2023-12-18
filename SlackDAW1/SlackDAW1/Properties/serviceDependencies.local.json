@@ -10,6 +10,12 @@
       "type": "mssql.local",
       "connectionId": "SlackyDaw1ConnectionString",
       "dynamicId": null
+    },
+    "mssql3": {
+      "secretStore": null,
+      "type": "mssql.local",
+      "connectionId": "Slack",
+      "dynamicId": null
     }
   }
 }
