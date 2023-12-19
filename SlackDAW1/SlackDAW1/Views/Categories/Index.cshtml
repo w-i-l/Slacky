@@ -1,5 +1,41 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<SlackDAW1.Models.Category>
+
 @{
+    ViewBag.Title = "Categories";
 }
+
+<h2>Categories</h2>
+
+@if(ViewBag.message != null)
+{
+    <div class="alert alert-success">@ViewBag.message</div>
+}
+
+<table class="table">
+    <tr>
+        <th>Category Name</th>
+        <th>Channels</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var category in Model)
+    {
+        <tr>
+            <td>@category.CategoryName</td>
+            <td>
+                <ul>
+                    @foreach (var channel in category.Channels)
+                    {
+                        <li>@channel.ChannelName</li>
+                    }
+                </ul>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = category.CategoryID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = category.CategoryID })
+            </td>
+        </tr>
+    }
+</table>
+
+@Html.ActionLink("Create New Category", "New", null, new { @class = "btn btn-primary" })
