@@ -30,12 +30,24 @@ namespace ArticlesApp.Controllers
                              orderby category.CategoryName
                              select category;
             ViewBag.Categories = categories;
+
+            var channels = from channel in db.Channels
+                           join category in db.Categories on channel.CategoryID equals category.CategoryID
+                           orderby channel.ChannelName
+                           select channel;
+            ViewBag.Channels = channels;
+
             return View();
         }
 
         public ActionResult Show(int id)
         {
             Category category = db.Categories.Find(id);
+            
+            var channels = from channel in db.Channels
+                           orderby channel.ChannelName
+                           select channel;
+            ViewBag.Channels = channels;        
             return View(category);
         }
 
@@ -54,7 +66,6 @@ namespace ArticlesApp.Controllers
                 TempData["message"] = "Categoria a fost adaugata";
                 return RedirectToAction("Index");
             }
-
             else
             {
                 return View(cat);

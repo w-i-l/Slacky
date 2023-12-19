@@ -11,6 +11,8 @@
     <div class="alert alert-success">@ViewBag.message</div>
 }
 
+@Html.ActionLink("Create New Category", "New", null, new { @class = "btn btn-primary" })
+
 <table class="table">
     <tr>
         <th>Category Name</th>
@@ -18,16 +20,24 @@
         <th>Actions</th>
     </tr>
 
-    @foreach (var category in Model)
+    @if (ViewBag.Channels != null)
+	{
+    @foreach (var category in ViewBag.Categories)
     {
         <tr>
             <td>@category.CategoryName</td>
             <td>
                 <ul>
-                    @foreach (var channel in category.Channels)
+                    @if (ViewBag.Channels != null)
                     {
-                        <li>@channel.ChannelName</li>
-                    }
+                        @foreach (var channel in ViewBag.Channels)
+                        {
+                            <li>@channel.ChannelName</li>
+                        }
+                    } else 
+                    {
+						<li>No channels in this category</li>
+					}
                 </ul>
             </td>
             <td>
@@ -36,6 +46,13 @@
             </td>
         </tr>
     }
+    } else {
+		<tr>
+			<td>No categories</td>
+			<td></td>
+			<td></td>
+		</tr>
+	}
 </table>
 
-@Html.ActionLink("Create New Category", "New", null, new { @class = "btn btn-primary" })
+

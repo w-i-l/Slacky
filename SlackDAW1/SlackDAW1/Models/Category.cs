@@ -13,7 +13,7 @@ namespace SlackDAW1.Models
         [MinLength(10, ErrorMessage = "Category name must be at least 10 characters")]
         public String CategoryName { get; set; }
 
-        public virtual ICollection<Channel> Channels { get; set; }
+        /*public virtual ICollection<Channel> Channels { get; set; }*/
 
     }
 }
