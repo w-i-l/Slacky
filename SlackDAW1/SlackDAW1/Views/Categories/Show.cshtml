@@ -1,0 +1,17 @@
+﻿@model SlackDAW1.Models.Category
+
+@{
+    ViewBag.Title = "Category Details: " + Model.CategoryName;
+}
+
+<h2>@Model.CategoryName</h2>
+
+<h3>Channels in this Category:</h3>
+<ul>
+    @foreach (var channel in Model.Channels)
+    {
+        <li>@channel.ChannelName</li>
+    }
+</ul>
+
+<!-- Add additional category details here if needed -->
