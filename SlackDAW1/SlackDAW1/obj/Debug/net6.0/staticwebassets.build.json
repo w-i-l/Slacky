@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "gKs2q7D9u6G274BHAEVFGFA5Yf2epAh/6GY6Fau/fTE=",
+  "Hash": "xIH2HvV8+dNiGDv7W5GcpGjTcsLbwpqxqTnbJglPQEQ=",
   "Source": "SlackDAW1",
   "BasePath": "_content/SlackDAW1",
   "Mode": "Default",
@@ -1071,6 +1071,40 @@
       "OriginalItemSpec": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\SlackDAW1.bundle.scp.css"
     },
     {
+      "Identity": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\app-example-1.png",
+      "SourceId": "SlackDAW1",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\",
+      "BasePath": "_content/SlackDAW1",
+      "RelativePath": "app-example-1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\app-example-1.png"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\app-example-2.png",
+      "SourceId": "SlackDAW1",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\",
+      "BasePath": "_content/SlackDAW1",
+      "RelativePath": "app-example-2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\app-example-2.png"
+    },
+    {
       "Identity": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\css\\site.css",
       "SourceId": "SlackDAW1",
       "SourceType": "Discovered",
@@ -1103,6 +1137,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\hero-image.png",
+      "SourceId": "SlackDAW1",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\",
+      "BasePath": "_content/SlackDAW1",
+      "RelativePath": "hero-image.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\hero-image.png"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\js\\site.js",
@@ -2089,6 +2140,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\quote.svg",
+      "SourceId": "SlackDAW1",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\",
+      "BasePath": "_content/SlackDAW1",
+      "RelativePath": "quote.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\quote.svg"
     }
   ]
 }

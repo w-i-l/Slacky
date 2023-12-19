@@ -5,12 +5,24 @@
       "PackagePath": "staticwebassets\\SlackDAW1.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\app-example-1.png",
+      "PackagePath": "staticwebassets\\app-example-1.png"
+    },
+    {
+      "Id": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\app-example-2.png",
+      "PackagePath": "staticwebassets\\app-example-2.png"
+    },
+    {
       "Id": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
       "Id": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\hero-image.png",
+      "PackagePath": "staticwebassets\\hero-image.png"
     },
     {
       "Id": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\js\\site.js",
@@ -243,6 +255,10 @@
     {
       "Id": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\User\\source\\repos\\Slack-copy\\SlackDAW1\\SlackDAW1\\wwwroot\\quote.svg",
+      "PackagePath": "staticwebassets\\quote.svg"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.SlackDAW1.Microsoft.AspNetCore.StaticWebAssets.props",

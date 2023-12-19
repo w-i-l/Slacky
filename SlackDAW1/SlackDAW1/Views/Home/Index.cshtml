@@ -2,48 +2,16 @@
     ViewData["Title"] = "Home Page";
 }
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 <div class="text-center">
-    <h1>Welcome to SlackDAW1</h1>
-    <p>This is a debug text leave it as it is.</p>
-
-    <br />
-    <br />
-
-    <div class="channel-section">
-
-        <button class="btn-primary"><a href="/Channels/New" class="text-white" />Create new channel</a></button>
-        <br />
-
-        
-        <button class="btn-primary"><a href="/Channels/Edit/1" class="text-white" />Edit first channel</a></button>
-        <br />
-
-        <button class="btn-primary"><a href="/Channels/Delete/1" class="text-white" />Delete first channel</a></button>
-        <br />
-
-        <button class="btn-primary"><a href="/Channels" class="text-white" />Show all</a></button>
-        <br />
-
-    </div>
-
-    <br />
-    <br />
-
-    <div class="message-section">
-
-        <button class="btn-primary"><a href="/Messages/New" class="text-white" />Create new message</a></button>
-        <br />
-
-        
-        <button class="btn-primary"><a href="/Messages/Edit/1" class="text-white" />Edit first channel</a></button>
-        <br />
-
-        <button class="btn-primary"><a href="/Messages/Delete/1" class="text-white" />Delete first channel</a></button>
-        <br />
-
-        <button class="btn-primary"><a href="/Messages" class="text-white" />Show all</a></button>
-        <br />
-
-    </div>
-
+    @if (SignInManager.IsSignedIn(User))
+    {
+       <partial name="_PresentationLayout" />
+    } else 
+    {
+    <partial name="_NotLoggedInLayout" />
+    }
 </div>
