@@ -8,11 +8,11 @@ html {
   }
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 60px;
+    background-color: #161a30;
+    margin: 0px;
+    width: 100%;
+    overflow-x: hidden;
+    color: white;
+   padding-top: 100px;
 }

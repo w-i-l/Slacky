@@ -13,6 +13,7 @@ namespace SlackDAW1.Models
         [MinLength(10, ErrorMessage = "Minim 10 caractere")]
         public string Body { get; set; }
 
+        [DataType(DataType.DateTime)]
         [Required]
         public DateTime Timestamp { get; set; }
 
@@ -20,10 +21,7 @@ namespace SlackDAW1.Models
         public int SenderID { get; set; }
 
         [Required(ErrorMessage = "Channel is required")]
-        public int ChannelID { get; set; }
-
-        
-       // public virtual Aici e User dar inca n-avem clasa Sender { get; set; }
-        public virtual Channel Channel { get; set; }
+        public int? ChannelID { get; set; }
+        public virtual Channel? Channel { get; set; }
     }
 }
