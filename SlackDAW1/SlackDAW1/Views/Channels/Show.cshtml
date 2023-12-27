@@ -3,18 +3,247 @@
 @{
 	ViewBag.Title = "Show";
 }
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
-<div class="container w-50 container-fluid align-self-center">
+<style>
+	
+	.channel {
+		padding: 20px;
+width: 100%;
+	}
 
-	<h2>Show channel</h2>
+	.channel-header {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		justify-content: center;
+		width: 100 %;
+		height: 100 %;
+		margin: 0 auto;
+		background-color: #ffffff;
+		margin-bottom: 20px;
+		margin: 0;
+		color: #161a30;
+		border-bottom: 2px solid #31304d;
+padding: 10px;
+	}
 
-	<br />
+	.show-channel {
+		display: flex;
+		flex-direction: row;
+		align-items: start;
+		justify-content: center;
+		width: 100 %;
+		height: 100 %;
+		margin: 0 auto;
+	}
 
-	<div class="channel-info">
+	.messages-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		justify-content: space-around;
+		width: 70%;
+		height: 100%;
+		margin: 0 auto;
+		margin-bottom: 20px;
+		margin: 0;
+		border: 2px solid #31304d;
+		overflow-y: hidden;
+	}
 
+	.messages {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-content: start;
+		height: 60vh;
+		overflow-y: scroll;
+		padding: 0;
+	}
+	
+	.messages::-webkit-scrollbar {
+		width: 0px;
+		background: transparent;
+	}
+
+	.messages::-webkit-scrollbar-thumb {
+		background: transparent;
+	}
+
+	.message {
+		display: flex;
+		flex-direction: row;
+		justify-content: start;
+align-items: center;
+		color: #ffffff;
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		
+		padding: 10px;
+	}
+
+	.message:hover {
+		border-bottom: 2px solid #31304d;
+	}
+
+	.message * {
+		margin: 0;
+		padding: 0;
+	}
+
+	.message span {
+		font-size: 0.75rem;
+		font-weight: 100;
+		color: #676767;
+		margin-left: 10px;
+	}
+
+	.message p:first-child {
+		font-weight: 400;
+		color: #676767;
+	}
+
+.message p:last-child {
+		font-weight: 600;
+		color: #fff;
+	}
+
+	
+
+	form {
+		width: 100%;
+		padding: 10px;
+		margin: 0;
+		border: 1px solid #31304d;
+	}
+
+	form * {
+		margin: 0;
+		padding: 0;
+	}
+
+	.new-message {
+		width: 100%;
+		display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+gap: 20px;
+	}
+
+	 #Body {
+		width: 100%;
+		height: 100%;
+padding: 5px;
+	}
+
+	input[type="submit"] {
+		height: 100%;
+		padding: 5px;
+	}
+
+	.users-in-channel-wrapper {
+		width: 30%;
+		height: 100%;
+		padding: 20px;
+	}
+
+	.user-info span {
+		font-size: 0.75rem;
+		font-weight: 100;
+		color: #fff;
+		margin-left: 10px;
+		background-color: #dd3333;
+		padding: 5px;
+		border-radius: 5px;
+	}
+</style>
+
+<div class="channel">
+
+	<div class="channel-header">
 		<h2>@Model.ChannelName</h2>
 		<p>@Model.ChannelDescription</p>
 		<p>@Model.Category.CategoryName</p>
+	</div>
 
+
+
+	<div class="show-channel">
+
+		<div class="messages-wrapper">
+			<div class="messages">
+				@if (ViewBag.Messages != null || ViewBag.Messages.count > 0)
+				{
+					foreach (var message in ViewBag.Messages)
+					{
+						<div class="message">
+							<p>@message.Sender.UserName: &nbsp;</p>
+							<p>@message.Body</p>
+							<span>@message.Timestamp</span>
+						</div>
+					}
+				}
+				else
+				{
+					<p>No messages.</p>
+					<button><a href="/Messages/Index">Reload</a></button>
+				}
+			</div>
+			@using (Html.BeginForm(actionName: "New", controllerName: "Messages", method: FormMethod.Post, routeValues: new { param = Model.ChannelID })) 
+			{
+				<div class="new-message">
+
+					<input type="hidden" name="ChannelID" value="@Model.ChannelID" />
+					<input type="text" name="Body" id="Body"/>
+					<input type="submit" value="Send"/>
+					<br />
+				</div>
+			}
+			</div>
+
+		<div class="users-in-channel-wrapper">
+			<p>Users in channel:</p>
+			<div class="users-in-channel">
+				@if (ViewBag.UsersWithModeratorStatus != null)
+				{
+					foreach (var userWithModeratorStatus in ViewBag.UsersWithModeratorStatus)
+					{
+						<div class="user-info">
+							<p>
+								@userWithModeratorStatus.User.UserName
+								@if (userWithModeratorStatus.IsModerator)
+								{
+									<span>Moderator</span
+
+									if (SignInManager.IsSignedIn(User))
+									{
+										if (UserManager.GetUserId(User) == userWithModeratorStatus.User.Id)
+										{
+											<span>(You)</span>
+										}
+									}
+								}
+							</p>
+						</div>
+					}
+				}
+				else
+				{
+					<p>Error: Couldn't fetch any users.</p>
+					<button><a href="/Users/Index/">Reload</a></button>
+				}
+			</div>
+
+			<div class="add-users">
+				<a class="btn btn-primary" href="/Users/Invite/@(Model.ChannelID)">Invite users</a>
+			</div>
+
+		</div>
 	</div>
 </div>

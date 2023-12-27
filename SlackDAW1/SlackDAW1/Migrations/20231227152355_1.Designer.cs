@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SlackDAW1.Data;
 
@@ -11,9 +12,10 @@ using SlackDAW1.Data;
 namespace SlackDAW1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231227152355_1")]
+    partial class _1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,10 +287,11 @@ namespace SlackDAW1.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<int?>("ChannelID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<string>("SenderID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("SenderID")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
@@ -296,8 +299,6 @@ namespace SlackDAW1.Migrations
                     b.HasKey("MessageID");
 
                     b.HasIndex("ChannelID");
-
-                    b.HasIndex("SenderID");
 
                     b.ToTable("Messages");
                 });
@@ -386,15 +387,11 @@ namespace SlackDAW1.Migrations
                 {
                     b.HasOne("SlackDAW1.Models.Channel", "Channel")
                         .WithMany()
-                        .HasForeignKey("ChannelID");
-
-                    b.HasOne("SlackDAW1.Models.ApplicationUser", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderID");
+                        .HasForeignKey("ChannelID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Channel");
-
-                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("SlackDAW1.Models.UserChannel", b =>

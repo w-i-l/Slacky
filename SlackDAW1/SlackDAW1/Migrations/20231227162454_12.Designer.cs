@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SlackDAW1.Data;
 
@@ -11,9 +12,10 @@ using SlackDAW1.Data;
 namespace SlackDAW1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231227162454_12")]
+    partial class _12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,6 +287,7 @@ namespace SlackDAW1.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<int?>("ChannelID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("SenderID")
@@ -386,7 +389,9 @@ namespace SlackDAW1.Migrations
                 {
                     b.HasOne("SlackDAW1.Models.Channel", "Channel")
                         .WithMany()
-                        .HasForeignKey("ChannelID");
+                        .HasForeignKey("ChannelID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SlackDAW1.Models.ApplicationUser", "Sender")
                         .WithMany()

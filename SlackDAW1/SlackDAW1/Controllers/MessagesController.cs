@@ -2,6 +2,7 @@
 using SlackDAW1.Models;
 using SlackDAW1.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 //chiar nu inteleg de ce nu accepta messages
 //nvm acum merge
@@ -11,10 +12,18 @@ namespace SlackDAW1.Controllers
     public class MessagesController : Controller
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public MessagesController(ApplicationDbContext context)
+        public MessagesController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager
+        )
         {
             db = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
@@ -38,15 +47,15 @@ namespace SlackDAW1.Controllers
         public IActionResult New(Message message)
         {
 
-            if (ModelState.IsValid)
+            message.Timestamp = DateTime.Now;
+            message.SenderID = _userManager.GetUserId(User);
+
+			if (ModelState.IsValid)
             {   
-                message.Timestamp = DateTime.Now;
-                // TODO: Change from hardcoded to logged in user
-                message.SenderID = 1;
                 db.Messages.Add(message);
                 db.SaveChanges();
                 TempData["message"] = "Message was added";
-                return RedirectToAction("Index");
+                return RedirectToRoute(new { controller = "Channels", action = "Show", id = message.ChannelID });
             } else
             {
 				ViewBag.Channels = ChannelsController.GetAllChannelsToDisplayForForm(db);
