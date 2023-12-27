@@ -2,16 +2,7 @@
   "dependencies": {
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:DefaultConnection"
-    },
-    "mssql2": {
-      "type": "mssql",
-      "connectionId": "SlackyDaw1ConnectionString",
-      "dynamicId": null
-    },
-    "mssql3": {
-      "type": "mssql",
-      "connectionId": "Slack",
+      "connectionId": "ConnectionStrings:SlackDaw1",
       "dynamicId": null
     }
   }
