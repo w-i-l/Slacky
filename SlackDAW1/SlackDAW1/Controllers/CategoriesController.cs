@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ArticlesApp.Controllers
+namespace SlackDAW1.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller

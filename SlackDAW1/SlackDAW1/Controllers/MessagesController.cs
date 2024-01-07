@@ -88,18 +88,20 @@ namespace SlackDAW1.Controllers
             if (ModelState.IsValid)
             {
                 message.Body = requestMessage.Body;
+                message.Timestamp = DateTime.Now;
                
                 db.SaveChanges();
                 TempData["message"] = "Message was edited";
-                return RedirectToAction("Index");
+                return RedirectToRoute(new { controller = "Channels", action = "Show", id = message.ChannelID });
             }
             return View(message);
         }
 
        
-        public IActionResult Delete(int id)
+       [HttpPost]
+        public IActionResult Delete(int MessageID)
         {
-            var message = db.Messages.Find(id);
+            var message = db.Messages.Find(MessageID);
             if (message == null)
             {
                 return NotFound();
@@ -108,7 +110,8 @@ namespace SlackDAW1.Controllers
             db.Messages.Remove(message);
             db.SaveChanges();
             TempData["message"] = "Message was deleted";
-            return RedirectToAction("Index");
+
+            return RedirectToRoute(new { controller = "Channels", action = "Show", id = message.ChannelID });
         }
 
        

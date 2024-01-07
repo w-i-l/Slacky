@@ -1,0 +1,38 @@
+﻿<div class="user-channels-wrapper">
+    <h2>Channels</h2>
+    <div class="user-channels">
+        @if (Context.Items["UserChannels"] is IEnumerable<Channel> userChannels && userChannels.Any())
+        {
+            foreach (var channel in userChannels)
+            {
+                <a href="\Channels\Show\@channel.ChannelID">@channel.ChannelName</a>
+            }
+        }
+        else
+        {
+            <p>No channels available.</p>
+        }
+    </div>
+</div>
+
+<style>
+    main {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100vw;
+        height: 80vh;
+        gap: 16px;
+    }
+
+    .user-channels-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-start;
+        width: 20vw;
+        height: 100%;
+        background-color: rgb(50, 19, 122), 121, 157);
+        color: #f1f1f1;
+        border-right: 2px solid #f1f1f1;
+    }
+</style>

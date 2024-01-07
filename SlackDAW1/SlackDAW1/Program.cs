@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SlackDAW1;
 using SlackDAW1.Data;
 using SlackDAW1.Models;
 
@@ -19,6 +20,7 @@ options.SignIn.RequireConfirmedAccount = true)
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -46,6 +48,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseUserChannelsMiddleware();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

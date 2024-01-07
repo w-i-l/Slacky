@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,12 +13,17 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SlackDAW1.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <header>
         <partial name="_LoginPartial" />
     </header>
     <div class="">
         <main role="main" class="">
+            @if(SignInManager.IsSignedIn(User))
+			{
+				<partial name="_ChannelsListLayout" />
+			}
             @RenderBody()
         </main>
     </div>

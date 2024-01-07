@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SlackDAW1.Models;
 using SlackDAW1.Data;
-using ArticlesApp.Controllers;
+using SlackDAW1.Controllers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -135,13 +135,16 @@ namespace SlackDAW1.Controllers
             var messages = db.Messages
                 .Where(m => m.ChannelID == id)
                 .OrderBy(m => m.Timestamp)
-                .Select(m => new {Body = m.Body, Timestamp = m.Timestamp, Sender = m.Sender })
+                .Select(m => new {Body = m.Body, Timestamp = m.Timestamp, Sender = m.Sender, MessageID = m.MessageID})
                 .ToList();
 
-            // Pass the users with moderator status to the view (consider using a ViewModel)
-            ViewBag.UsersWithModeratorStatus = usersWithModeratorStatus;
+            var isUserModerator = db.UserChannels
+                .Where(uc => uc.ChannelID == id && uc.UserID == _userManager.GetUserId(User))
+                .Select(uc => uc.IsModerator)
+                .First();
 
-            // Pass the messages to the view (consider using a ViewModel)
+            ViewBag.IsUserModerator = isUserModerator == true;
+            ViewBag.UsersWithModeratorStatus = usersWithModeratorStatus;
             ViewBag.Messages = messages;
 
             return View(channel);
