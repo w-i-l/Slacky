@@ -3,12 +3,14 @@ using SlackDAW1.Models;
 using SlackDAW1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 //chiar nu inteleg de ce nu accepta messages
 //nvm acum merge
 
 namespace SlackDAW1.Controllers
 {
+    [Authorize(Roles = "Admin, Moderator, User")]
     public class MessagesController : Controller
     {
         private readonly ApplicationDbContext db;

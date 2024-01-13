@@ -5,9 +5,12 @@ using SlackDAW1.Controllers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SlackDAW1.Controllers
 {
+    
+    [Authorize(Roles = "Admin, Moderator, User")]
     public class ChannelsController : Controller
     {
 
@@ -53,6 +56,20 @@ namespace SlackDAW1.Controllers
                     ChannelID = channel.ChannelID,
                     IsModerator = true
                 });
+
+                // adminul sa fie moderator
+                var adminUser = db.Users.FirstOrDefault(u => u.Email == "admin@test.com");
+                if (adminUser != null)
+                {
+                    var adminUserChannel = new UserChannel
+                    {
+                        UserID = adminUser.Id,
+                        ChannelID = channel.ChannelID,
+                        IsModerator = true
+                    };
+                    db.UserChannels.Add(adminUserChannel);
+                }
+
                 db.SaveChanges();
 
                 TempData["message"] = "Channel was added";
@@ -70,14 +87,28 @@ namespace SlackDAW1.Controllers
 
         public IActionResult Edit(int id)
         {
+
             Channel channel = db.Channels.Include("Category")
                                 .Where(chan => chan.ChannelID == id)
                                 .First();
 
-            var categories = CategoriesController.GetAllCategoriesToDisplayForForm(db);
-            ViewBag.Categories = categories;
+            var currentUserId = _userManager.GetUserId(User);
 
-            return View(channel);
+            try {
+                var isUserModerator = db.UserChannels
+                .Where(uc => uc.ChannelID == id && uc.UserID == currentUserId)
+                .Select(uc => uc.IsModerator)
+                .First();
+
+                var categories = CategoriesController.GetAllCategoriesToDisplayForForm(db);
+                ViewBag.Categories = categories;
+
+                return View(channel);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
@@ -85,6 +116,19 @@ namespace SlackDAW1.Controllers
         {
 
             Channel channel = db.Channels.Find(id);
+            var currentUserId = _userManager.GetUserId(User);
+
+            try
+            {
+                var isUserModerator = db.UserChannels
+                .Where(uc => uc.ChannelID == id && uc.UserID == currentUserId)
+                .Select(uc => uc.IsModerator)
+                .First();
+            }
+            catch
+            {
+                return NotFound();
+            }
 
 			if(ModelState.IsValid && channel != null)
             {
@@ -104,10 +148,25 @@ namespace SlackDAW1.Controllers
 				return View(channel);
 			}
 		}
-        
+
         public IActionResult Delete(int id)
         {
 			Channel channel = db.Channels.Find(id);
+
+            var currentUserId = _userManager.GetUserId(User);
+
+            try
+            {
+                var isUserModerator = db.UserChannels
+                .Where(uc => uc.ChannelID == id && uc.UserID == currentUserId)
+                .Select(uc => uc.IsModerator)
+                .First();
+            }
+            catch
+            {
+                return NotFound();
+            }
+
 			db.Channels.Remove(channel);
 			db.SaveChanges();
             TempData["message"] = "Channel was deleted";
@@ -122,11 +181,9 @@ namespace SlackDAW1.Controllers
 
             if (channel == null)
             {
-                // Handle the case where the channel is not found
                 return NotFound();
             }
 
-            // Get the users associated with the channel along with moderator status
             var usersWithModeratorStatus = db.UserChannels
                 .Where(uc => uc.ChannelID == id)
                 .Select(uc => new { User = uc.User, IsModerator = uc.IsModerator })
@@ -150,15 +207,11 @@ namespace SlackDAW1.Controllers
             return View(channel);
         }
 
-
-
-
         public IActionResult Index()
         {
 
             var user = _userManager.GetUserId(User);
 
-            /*i want to get the channels in whicj the user is with the category*/
             var channels = db.UserChannels
                 .Where(uc => uc.UserID == user)
                 .Include(c => c.Channel.Category)

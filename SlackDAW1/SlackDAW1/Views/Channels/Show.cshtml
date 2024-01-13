@@ -38,12 +38,19 @@
 		padding: 0;
 	}
 
+	.channel-title p {
+		font-size: 1rem;
+		font-weight: 100;
+		color: #a2a2a2;
+		margin: 0;
+		padding: 0;
+	}
+
 	.channel-header > p {
-		font-size: 0.75rem;
-		font-weight: 800;
-		color: #85858d;
-		padding: 5px 10px;
-		background-color: rgb(189, 172, 88);
+		font-size: 1rem;
+		color: white;
+		padding: 5px;
+		background-color: rgb(36, 150, 127);
 		border-radius: 5px;
 	}
 
@@ -82,14 +89,14 @@
 		padding: 0;
 	}
 
-		.messages::-webkit-scrollbar {
-			width: 0px;
-			background: transparent;
-		}
+	.messages::-webkit-scrollbar {
+		width: 0px;
+		background: transparent;
+	}
 
-		.messages::-webkit-scrollbar-thumb {
-			background: transparent;
-		}
+	.messages::-webkit-scrollbar-thumb {
+		background: transparent;
+	}
 
 	.message-wrapper {
 		width: 100%;
@@ -120,6 +127,11 @@
 		align-items: center;
 		justify-content: center;
 		gap: 10px;
+		display: none;
+	}
+
+	.message-wrapper:hover > .message-action {
+		display: flex;
 	}
 
 	.message-action form {
@@ -133,20 +145,18 @@
 		flex-direction: row;
 	}
 
-		.message-action form input[type="submit"] {
-			height: 100%;
-			padding: 5px;
-			background-color: #dd3333;
-			color: #fff;
-			border: none;
-			text-decoration: none;
-			margin: 0px 5px;
-		}
+	.message-action form input[type="submit"] {
+		height: 100%;
+		color: #fff;
+		border: none;
+		text-decoration: none;
+		background: #31304d;
+		border-radius: 5px;
+	}
 
-			.message-action form input[type="submit"]:hover {
-				background-color: #ff0000;
-				color: #605b5b;
-			}
+	.message-action form input[type="submit"]:hover {
+		color: #ff0000;
+	}
 
 		.message-action form a {
 			height: 100%;
@@ -184,6 +194,11 @@
 			font-weight: 100;
 			color: #676767;
 			margin-left: 10px;
+			display: none;
+		}
+
+		.message:hover > span {
+			display: block;
 		}
 
 		.message p:first-child {
@@ -202,7 +217,7 @@
 		width: 100%;
 		padding: 10px;
 		margin: 0;
-		border: 1px solid #31304d;
+		border-top: 1px solid #31304d;
 	}
 
 		form * {
@@ -222,14 +237,30 @@
 	#Body {
 		width: 100%;
 		height: 100%;
-		padding: 5px;
-		border-radius: 12px;
-		border: nonde;
+		padding: 7px 10px;
+		border-radius: 5px;
+		border: none;
+		background-color: white;
+		color: #31304d;
+	}
+
+	#Body:focus {
+		outline: none;
 	}
 
 	input[type="submit"] {
 		height: 100%;
-		padding: 5px;
+		padding: 7px 10px;
+		background-color: #31304d;
+		color: #fff;
+		border: none;
+		text-decoration: none;
+		border-radius: 5px;
+	}
+
+	input[type="submit"]:hover {
+		background-color: white;
+		color: #31304d;
 	}
 
 	.users-in-channel-wrapper {
@@ -278,6 +309,11 @@
 		justify-content: start;
 		gap: 5px;
 		width: 100%;
+		display: none;
+	}
+
+	.user-info:hover > .user-info-buttons {
+		display: flex;
 	}
 
 		.user-info-buttons form {
@@ -302,12 +338,11 @@
 
 		#remove-button:hover {
 			background-color: #ff0000;
-			color: #605b5b;
 		}
 
 	#promote-button {
 		padding: 5px;
-		background-color: #1643ff;
+		background-color: #243b95;
 		color: #fff;
 		border: none;
 		text-decoration: none;
@@ -323,7 +358,14 @@
 	}
 
 	.add-users {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
 		margin: 20px 0px;
+		width: 100%;
+		height: 32px;
+		padding: 0;
 	}
 
 	.add-users-button {
@@ -334,11 +376,19 @@
 		text-decoration: none;
 		padding: 10px 20px;
 		width: 200px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		border-radius: 5px;
+	}
+
+	.add-users-button:hover a {
+		text-decoration: none;
 	}
 
 	.leave-channel form {
 		border: none;
-		margin: 20px;
 		padding: 0;
 		display: flex;
 		flex-direction: row;
@@ -346,24 +396,30 @@
 		width: 100%;
 		height: 32px;
 		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 	}
 
-	.leave-channel-button {
+	input.leave-channel-button {
 		height: 32px;
 		background-color: #dd3333;
 		color: #fff;
 		border: none;
 		text-decoration: none;
-		padding: 10px 20px;
 		width: 200px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
 	}
 
 	.user-actions {
 		width: 100%;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		align-items: center;
-		justify-content: space-around;
+		justify-content: center;
+		gap: 12px;
 	}
 </style>
 
@@ -397,19 +453,22 @@
 			<div class="messages" id='messagesContainer'>
 				@if (ViewBag.Messages != null || ViewBag.Messages.count > 0)
 				{
-					foreach (var message in ViewBag.Messages)
+					foreach (var	 message in ViewBag.Messages)
 					{
 						<div class="message-wrapper">
-							<div class="message">
-								<p>@message.Sender.UserName: &nbsp;</p>
-								<p>@message.Body</p>
-								<span>@message.Timestamp</span>
-							</div>
+                            <div class="message">
+                                <p>@message.Sender.UserName: &nbsp;</p>
+                                <p>@Html.Raw(message.Body)</p>
+                                <span>@message.Timestamp</span>
+                            </div>
 
 							@if (ViewBag.IsUserModerator || message.Sender.Id == UserManager.GetUserId(User))
 							{
 								<div class="message-action">
-									<a href="/Messages/Edit/@message.MessageID">Edit</a>
+									@if (!message.Body.ToString().Contains("<p>") && !message.Body.ToString().Contains("</p>"))
+									{
+										<a href="/Messages/Edit/@message.MessageID">Edit</a>
+									}
 									@using (Html.BeginForm(actionName: "Delete", controllerName: "Messages", method: FormMethod.Post))
 									{
 										<input type="hidden" name="MessageID" value="@message.MessageID" />
@@ -432,7 +491,7 @@
 
 					<input type="hidden" name="ChannelID" value="@Model.ChannelID" />
 					<input type="text" name="Body" id="Body" />
-					<input type="submit" value="Send" />
+					<input type="submit" value="🗎 Attach media" />
 					<br />
 				</div>
 			}
@@ -505,9 +564,12 @@
 			</div>
 
 			<div class="user-actions">
-				<div class="add-users">
-					<a class="add-users-button" href="/Users/Invite/@(Model.ChannelID)">Invite users</a>
-				</div>
+				@if (ViewBag.IsUserModerator)
+				{
+					<div class="add-users">
+						<a class="add-users-button" href="/Users/Invite/@(Model.ChannelID)">Invite users</a>
+					</div>
+				}
 
 				<div class="leave-channel">
 					@using (Html.BeginForm(actionName: "LeaveChannel", controllerName: "Users", method: FormMethod.Post, routeValues: new { param = Model.ChannelID }))

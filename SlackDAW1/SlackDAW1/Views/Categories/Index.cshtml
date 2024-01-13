@@ -1,58 +1,55 @@
-﻿@model IEnumerable<SlackDAW1.Models.Category>
-
-@{
+﻿@{
     ViewBag.Title = "Categories";
+    var categoryDeletable = ViewBag.CategoryDeletable as Dictionary<int, bool>;
+    var categoryChannels = ViewBag.CategoryChannels as Dictionary<int, List<SlackDAW1.Models.Channel>>;
+    var categories = ViewBag.Categories as List<SlackDAW1.Models.Category>;
 }
+<div style="color: white">
+    <h2>Categories</h2>
 
-<h2>Categories</h2>
+    @Html.ActionLink("Create New Category", "New", null, new { @class = "btn btn-primary" })
 
-@if(ViewBag.message != null)
-{
-    <div class="alert alert-success">@ViewBag.message</div>
-}
-
-@Html.ActionLink("Create New Category", "New", null, new { @class = "btn btn-primary" })
-
-<table class="table">
-    <tr>
-        <th>Category Name</th>
-        <th>Channels</th>
-        <th>Actions</th>
-    </tr>
-
-    @if (ViewBag.Channels != null)
-	{
-    @foreach (var category in ViewBag.Categories)
+    @if (categories != null && categories.Count > 0)
     {
-        <tr>
-            <td>@category.CategoryName</td>
-            <td>
-                <ul>
-                    @if (ViewBag.Channels != null)
-                    {
-                        @foreach (var channel in ViewBag.Channels)
+        <table class="table">
+            <tr>
+                <th>Category Name</th>
+                <th>Channels</th>
+                <th>Actions</th>
+            </tr>
+
+            @foreach (var category in categories)
+            {
+                <tr>
+                    <td>@category.CategoryName</td>
+                    <td>
+                        <ul>
+                            @if (categoryChannels.ContainsKey(category.CategoryID))
+                            {
+                                foreach (var channel in categoryChannels[category.CategoryID])
+                                {
+                                    <li>@channel.ChannelName</li>
+                                }
+                            }
+                            else
+                            {
+                                <li>No channels in this category</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = category.CategoryID })
+                        @if (categoryDeletable[category.CategoryID])
                         {
-                            <li>@channel.ChannelName</li>
+                            @Html.ActionLink("Delete", "Delete", new { id = category.CategoryID }, new { @class = "btn btn-danger" })
                         }
-                    } else 
-                    {
-						<li>No channels in this category</li>
-					}
-                </ul>
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = category.CategoryID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = category.CategoryID })
-            </td>
-        </tr>
+                    </td>
+                </tr>
+            }
+        </table>
     }
-    } else {
-		<tr>
-			<td>No categories</td>
-			<td></td>
-			<td></td>
-		</tr>
-	}
-</table>
-
-
+    else
+    {
+        <p>No categories found.</p>
+    }
+</div>

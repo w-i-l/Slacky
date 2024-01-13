@@ -6,6 +6,7 @@ using SlackDAW1.Models;
 
 namespace SlackDAW1.Controllers
 {
+	[Authorize(Roles = "Admin, Moderator, User")]
 	public class UsersController : Controller
 	{
 
@@ -72,15 +73,12 @@ namespace SlackDAW1.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 
-			// Check if the logged-in user is an administrator for the channel
 			var myRoleInChannel = db.UserChannels
 				.FirstOrDefault(uc => uc.UserID == me.Id && uc.ChannelID == channelId && uc.IsModerator);
 
 			if (myRoleInChannel == null)
 			{
-				// TODO
-				// If the user is not an administrator, redirect to home or handle it as needed
-				return RedirectToAction("Index", "Home");
+				return NotFound();
 			}
 
 			var userChannel = db.UserChannels
@@ -93,8 +91,7 @@ namespace SlackDAW1.Controllers
 			}
 			else
 			{
-				// Handle the case where the userChannel is not found (sequence is empty)
-				// You might want to log this or return an appropriate response.
+				return NotFound();
 			}
 
 			return RedirectToAction("Show", "Channels", new { id = channelId });
@@ -111,15 +108,12 @@ namespace SlackDAW1.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 
-			// Check if the logged-in user is an administrator for the channel
 			var myRoleInChannel = db.UserChannels
 				.FirstOrDefault(uc => uc.UserID == me.Id && uc.ChannelID == channelId && uc.IsModerator);
 
 			if (myRoleInChannel == null)
 			{
-				// TODO
-				// If the user is not an administrator, redirect to home or handle it as needed
-				return RedirectToAction("Index", "Home");
+				return NotFound();
 			}
 
 			var userChannel = db.UserChannels
@@ -132,8 +126,7 @@ namespace SlackDAW1.Controllers
 			}
 			else
 			{
-				// Handle the case where the userChannel is not found (sequence is empty)
-				// You might want to log this or return an appropriate response.
+				return NotFound();
 			}
 
 			return RedirectToAction("Show", "Channels", new { id = channelId });
@@ -150,15 +143,12 @@ namespace SlackDAW1.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 
-			// Check if the logged-in user is an administrator for the channel
 			var myRoleInChannel = db.UserChannels
 				.FirstOrDefault(uc => uc.UserID == me.Id && uc.ChannelID == channelId && uc.IsModerator);
 
 			if (myRoleInChannel == null)
 			{
-				// TODO
-				// If the user is not an administrator, redirect to home or handle it as needed
-				return RedirectToAction("Index", "Home");
+				return NotFound();	
 			}
 
 			var userChannel = db.UserChannels
@@ -171,8 +161,7 @@ namespace SlackDAW1.Controllers
 			}
 			else
 			{
-				// Handle the case where the userChannel is not found (sequence is empty)
-				// You might want to log this or return an appropriate response.
+				return NotFound();
 			}
 
 			return RedirectToAction("Show", "Channels", new { id = channelId });
@@ -199,14 +188,37 @@ namespace SlackDAW1.Controllers
 			}
 			else
 			{
-				// Handle the case where the userChannel is not found (sequence is empty)
-				// You might want to log this or return an appropriate response.
+				return NotFound();
 			}
 
 			return RedirectToAction("Index", "Channels");
 		}
 
+		[Authorize(Roles = "Admin, Moderator, User")]
+		[HttpPost]
+		public IActionResult AddUserToChannel(int id)
+		{
 
+			var currentUserId = _userManager.GetUserId(User);
+
+			var isAlreadyInChannel = db.UserChannels.Any(uc => uc.UserID == currentUserId && uc.ChannelID == id);
+			if (isAlreadyInChannel)
+			{
+				return RedirectToAction("Show", "Channels", new { id = id });
+			}
+
+						var userChannel = new UserChannel
+			{
+				UserID = currentUserId,
+				ChannelID = id,
+				IsModerator = false
+			};
+
+			db.UserChannels.Add(userChannel);
+			db.SaveChanges();
+
+			return RedirectToAction("Show", "Channels", new { id = id });
+		}
 
 		public IActionResult Index()
 		{

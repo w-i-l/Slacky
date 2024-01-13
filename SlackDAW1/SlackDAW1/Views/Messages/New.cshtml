@@ -1,34 +1,35 @@
 ﻿@model SlackDAW1.Models.Message
 
-<h2>Create New Message</h2>
+<div>
+    <h2>Create New Message</h2>
 
-@using (Html.BeginForm(actionName: "New", controllerName: "Messages", method: FormMethod.Post))
-{
-    <div class="form-group">
-        @Html.LabelFor(model => model.Body)
-        @Html.TextAreaFor(model => model.Body, new { @class = "form-control", rows = 5, placeholder = "Enter your message..." })
-        @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+    @using (Html.BeginForm(actionName: "New", controllerName: "Messages", method: FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body)
+            @Html.TextAreaFor(model => model.Body, new { @class = "form-control summernote", rows = 0 })
 
-        <br />
+            @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
 
-        @Html.LabelFor(model => model.Channel)
-        @if (ViewBag.Channels != null)
-        {
-            @Html.DropDownListFor(
-                model => model.ChannelID,
-                new SelectList(ViewBag.Channels, "Value", "Text"),
-                new { @class = "form-control" }
-            )
-            @Html.ValidationMessageFor(model => model.Channel, "", new { @class = "text-danger" })
-        }
-        else
-        {
-            <p>Error: Couldn't fetch any channels.</p>
-            <button><a href="/Messages/New">Reload</a></button>
-        }
+            <br />
+            <input type="hidden" value="@Model.ChannelID" name="ChannelID"/>
+        </div>
 
-        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    </div>
-
-    <input type="submit" value="Create" class="btn btn-primary" />
-}
+        <input type="submit" value="Create" class="btn btn-primary" />
+    }
+    @section Scripts {
+        <script>
+            $(document).ready(function() {
+                $('.summernote').summernote({
+                    height: 1,
+                    minHeight: null,
+                    maxHeight: null,
+                    focus: true,
+                    toolbar: [
+                        ['insert', ['link', 'picture', 'video']],
+                    ],
+                });
+            });
+        </script>
+    }
+</div>

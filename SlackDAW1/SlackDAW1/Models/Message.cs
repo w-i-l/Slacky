@@ -9,7 +9,6 @@ namespace SlackDAW1.Models
         public int MessageID { get; set; }
 
         [Required(ErrorMessage = "Message body is required")]
-        [StringLength(1000, ErrorMessage = "Message cannot be longer than 1000 characters")]
         [MinLength(1, ErrorMessage = "Minim 1 caracter")]
         public string Body { get; set; }
 

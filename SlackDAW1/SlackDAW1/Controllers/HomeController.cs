@@ -6,9 +6,11 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SlackDAW1.Controllers
 {
+    [Authorize(Roles = "Admin, Moderator, User")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
