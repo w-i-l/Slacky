@@ -1,6 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SlackDAW1.Models;
+using SlackDAW1.Data;
+using SlackDAW1.Controllers;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SlackDAW1.Controllers
 {
@@ -8,13 +14,25 @@ namespace SlackDAW1.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public HomeController(
+            ILogger<HomeController> logger,
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager
+        )
         {
             _logger = logger;
+            db = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
-        {
+        {   
             return View();
         }
 

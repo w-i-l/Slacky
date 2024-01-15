@@ -9,18 +9,16 @@ namespace SlackDAW1.Models
         public int MessageID { get; set; }
 
         [Required(ErrorMessage = "Message body is required")]
-        [StringLength(1000, ErrorMessage = "Message cannot be longer than 1000 characters")]
-        [MinLength(10, ErrorMessage = "Minim 10 caractere")]
+        [MinLength(1, ErrorMessage = "Minim 1 caracter")]
         public string Body { get; set; }
 
         [DataType(DataType.DateTime)]
         [Required]
         public DateTime Timestamp { get; set; }
 
-        [Required(ErrorMessage = "Sender is required")]
-        public int SenderID { get; set; }
+        public string? SenderID { get; set; }
+        public virtual ApplicationUser? Sender { get; set; }
 
-        [Required(ErrorMessage = "Channel is required")]
         public int? ChannelID { get; set; }
         public virtual Channel? Channel { get; set; }
     }

@@ -7,6 +7,8 @@
 
         public int ChannelID { get; set; }
         public virtual Channel Channel { get; set; }
+
+        public bool IsModerator { get; set; }
     }
 
 }
