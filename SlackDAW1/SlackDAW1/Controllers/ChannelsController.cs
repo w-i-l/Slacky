@@ -73,7 +73,7 @@ namespace SlackDAW1.Controllers
                 db.SaveChanges();
 
                 TempData["message"] = "Channel was added";
-                return RedirectToAction("Index");
+                return RedirectToRoute(new { controller = "Channels", action = "Show", id = channel.ChannelID });
             }
             else
             {
