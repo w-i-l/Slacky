@@ -1,6 +1,6 @@
 <h1>Slacky</h1>
 <h2>A workplace collaboration platform made with Asp.Net </h2>
-<img src=''>
+<img src='https://github.com/w-i-l/ReadME.md-template/assets/65015373/89ecaf19-68ad-42b5-9f4a-6c1bf3c7fafc'/>
 
 
 
